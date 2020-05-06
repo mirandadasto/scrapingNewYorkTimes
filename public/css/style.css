@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=Rock+Salt');
+@import 'componentStylesheets/loader.css';
+@import 'componentStylesheets/neon.css';
+@import 'componentStylesheets/panels.css';
+@import 'componentStylesheets/modal.css';
+@import 'componentStylesheets/header.css';
+
+:root {
+  --header-height: 30em;
+}
+
+body {
+  background-image: url('../prism.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 200%;
+  background-position: center center;
+  font-size: 62.5%;
+  font-family: arial;
+  margin: 0;
+  padding: 0;
+}
+
+a:active {
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}
