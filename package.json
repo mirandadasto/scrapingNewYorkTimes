@@ -1,26 +1,23 @@
 {
-  "name": "scrapingnewyorktimes",
+  "name": "new-york-times-scraper",
   "version": "1.0.0",
-  "description": "In this assignment, you'll create a web app that lets users view and leave comments on the latest news. But you're not going to actually write any articles; instead, you'll flex your Mongoose and Cheerio muscles to scrape news from another site.",
+  "description": "A web scraping app that uses mongo for storage",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mirandadasto/scrapingNewYorkTimes.git"
-  },
-  "author": "",
+  "author": "Marco Principio",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mirandadasto/scrapingNewYorkTimes/issues"
+    "url": "https://github.com/m081779/mongo-scraper/issues"
   },
-  "homepage": "https://github.com/mirandadasto/scrapingNewYorkTimes#readme",
+  "homepage": "https://github.com/m081779/mongo-scraper#readme",
   "dependencies": {
-    "axios": "^0.19.2",
-    "cheerio": "^1.0.0-rc.3",
-    "express": "^4.17.1",
-    "express-handlebars": "^4.0.3",
-    "mongoose": "^5.9.9"
+    "body-parser": "^1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.0.0-rc2",
+    "morgan": "^1.9.0",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "serve-favicon": "^2.4.5"
   }
 }
