@@ -1,43 +1,60 @@
-const express = require("express");
-const expressHandlebars = require("express-handlebars");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+//dependencies
+const express = require('express'),
+const mongoose = require('mongoose'),
+const exphbs = require('express-handlebars'),
+const bodyParser = require('body-parser'),
+const logger = require('morgan'),
+const path = require('path'),
+const favicon = require('serve-favicon');
 
-const PORT = process.env.PORT || 3000;
 
+//initializing the app
 const app = express();
-const router = express.Router();
 
-// Import routes and give the server access to them.
-require("./config/routes.js")(router);
+//setting up the database
+const config = require('./config/database');
+mongoose.Promise = Promise;
+mongoose.connect(config.database, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }).then( result => {
+    console.log(`Connected to database '${result.connections[0].name}' on ${result.connections[0].host}:${result.connections[0].port}`);
+  })
+  .catch(err => console.log('There was an error with your connection:', err));
+  
+//setting up favicon middleware
+app.use(favicon(path.join(__dirname, 'public', 'assets/img/favicon.ico')));
 
-// Serve static content for the app from the "public" directory
-app.use(express.static(__dirname + "/public"));
+//setting up Morgan middleware
+app.use(logger('dev'));
 
-// Set Handlebars
-app.engine("handlebars", expressHandlebars({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
+//setting up body parser middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
-// Parse request body as JSON
-app.use(bodyParser.urlencoded({ extended: false }));
+//setting up handlebars middleware
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
-app.use(router);
+//setting up the static directory
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/articles',express.static(path.join(__dirname, 'public')));
+app.use('/notes',express.static(path.join(__dirname, 'public')));
 
-const db = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-mongoose.connect(db, function(err)
-{
-    if (err)
-    {
-        console.log(err);
-    }
-    else
-    {
-        console.log("mongoose connection is successful");
-    }
-});
+//setting up routes
+const index = require('./routes/index'),
+const articles = require('./routes/articles'),
+const notes = require('./routes/notes'),
+const scrape = require('./routes/scrape');
 
-app.listen(PORT, function()
-{
-    console.log("App now listening on port " + PORT);
+app.use('/', index);
+app.use('/articles', articles);
+app.use('/notes', notes);
+app.use('/scrape', scrape);
+
+//starting server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, function () {
+  console.log(`Listening on http://localhost:${PORT}`);
 });
